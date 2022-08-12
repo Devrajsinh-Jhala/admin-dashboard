@@ -10,7 +10,7 @@ function Companies() {
   useEffect(() => {
     axios({
       method: "get",
-      // withCredentials: true,
+      withCredentials: true,
       url: "https://admin-panel-backend.vercel.app/get-companies",
     }).then((data) => {
       setCompanyList(data.data);
@@ -53,17 +53,15 @@ function Companies() {
         </div>
 
         {/* companies */}
-        <div className="columns-3 my-5 mx-5">
+        <div className="columns-3 mx-5">
           {companyList.map((element) => (
-            <div className="my-3">
-              <Link
-                key={element._id}
-                href={`/dashboard/companies/${element._id}`}
-                passHref
-              >
-                <p className="cursor-pointer">{element.title}</p>
-              </Link>
-            </div>
+            <Link
+              key={element._id}
+              href={`/dashboard/companies/${element._id}`}
+              passHref
+            >
+              <p className="cursor-pointer">{element.title}</p>
+            </Link>
           ))}
         </div>
       </div>
