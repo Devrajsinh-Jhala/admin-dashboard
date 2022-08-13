@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Map } from "immutable";
 import {
   Editor,
   EditorState,
@@ -22,17 +21,22 @@ const RichEditor = ({
   curItem,
   purpose,
 }) => {
-  // const [contentLength, setContentLength] = useState(0);
+  const [contentLength, setContentLength] = useState(0);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
-  // const [lenExceeded, setLenExceeded] = useState(false);
+  const [lenExceeded, setLenExceeded] = useState(false);
 
   useEffect(() => {
     // console.log("hi");
-    if (companyDetails) {
+    if (companyDetails && purpose === "companyDescription") {
       setEditorState(() =>
         EditorState.createWithContent(stateFromHTML(companyDetails.description))
+      );
+    }
+    if (companyDetails && purpose === "aboutCompany") {
+      setEditorState(() =>
+        EditorState.createWithContent(stateFromHTML(companyDetails.about))
       );
     }
     if (curItem && purpose === "jobDescription") {
@@ -45,19 +49,19 @@ const RichEditor = ({
         EditorState.createWithContent(stateFromHTML(curItem.responsibilities))
       );
     }
-  }, [companyDetails]);
+  }, [companyDetails, curItem, purpose]);
 
   useEffect(() => {
     handleEditorChange(stateToHTML(editorState.getCurrentContent()));
-  }, [editorState]);
+  }, [editorState, handleEditorChange]);
 
-  // useEffect(() => {
-  //   const len = editorState.getCurrentContent().getPlainText().length;
-  //   setContentLength(len);
-  //   if (setLenExceeded)
-  //     if (len > 500) setLenExceeded(true);
-  //     else setLenExceeded(false);
-  // }, [editorState]);
+  useEffect(() => {
+    const len = editorState.getCurrentContent().getPlainText().length;
+    setContentLength(len);
+    if (setLenExceeded)
+      if (len > 500) setLenExceeded(true);
+      else setLenExceeded(false);
+  }, [editorState]);
 
   const onEditorChange = (editorchange) => {
     setEditorState(editorchange);
@@ -87,19 +91,19 @@ const RichEditor = ({
 
     if (newState) {
       setEditorState(newState);
-      return "handled";
+      return 'handled';
     }
-    return "not-handled";
+    return 'not-handled';
   };
 
   // const handlePastedText = (_text, html, editorState) => {};
-  const customRenderMap = Map({
-    unstyled: {
-      element: "div",
-      // will be used in convertFromHTMLtoContentBlocks
-      aliasedElements: ["p"],
-    },
-  });
+  // const customRenderMap = Map({
+  //   unstyled: {
+  //     element: "div",
+  //     // will be used in convertFromHTMLtoContentBlocks
+  //     aliasedElements: ["p"],
+  //   },
+  // });
 
   const onContentChange = (editorState) => {
     const contentState = editorState.getCurrentContent();
@@ -107,6 +111,9 @@ const RichEditor = ({
     // if (contentState.getPlainText().length > 500) {
     //   setLenExceeded(true);
     // }
+  };
+
+  const handlePastedText = (_text, html, editorState) => {
   };
 
   return (
@@ -187,13 +194,12 @@ const RichEditor = ({
           editorState={editorState}
           onChange={(editorState) => onEditorChange(editorState)}
           handleKeyCommand={handleKeyCommand}
-          // handlePastedText={this.handlePastedText}
-          blockRenderMap={customRenderMap}
+          handlePastedText={handlePastedText}
           placeholder="Give a brief description"
           className="focus:border-[#2dc5a1] focus:border-2 transition duration-200  ease-in"
         />
       </div>
-      {/* <div className="mt-1 font-semibold">
+      <div className="mt-1 font-semibold">
         {lenExceeded ? (
           <p className="text-sm" style={{ color: 'red' }}>
             Exceeded maximum limit {contentLength}/500
@@ -203,7 +209,7 @@ const RichEditor = ({
             {contentLength}/500
           </p>
         )}
-      </div> */}
+      </div>
     </div>
   );
 };

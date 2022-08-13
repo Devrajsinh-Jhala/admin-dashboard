@@ -16,6 +16,7 @@ function AddJobModal({
   companyDetails,
 }) {
   const [jobTitle, setJobTitle] = useState("");
+  const [featured, setFeatured] = useState(false);
   const [jobType, setjobType] = useState([
     { name: "Fulltime", selected: false },
     { name: "Internship", selected: false },
@@ -29,15 +30,16 @@ function AddJobModal({
   const handleDescriptionChange = (htmlContent) => {
     setDescription(htmlContent);
   };
-  const [responsibilities, setResponsibilities] = useState("");
-  const handleResponsibilityChange = (htmlContent) => {
-    setResponsibilities(htmlContent);
-  };
+  // const [responsibilities, setResponsibilities] = useState("");
+  // const handleResponsibilityChange = (htmlContent) => {
+  //   setResponsibilities(htmlContent);
+  // };
   const [inputValue, setInputValue] = useState("");
 
   // load company details
   useEffect(() => {
     if (companyDetails) {
+
     }
   }, [companyDetails]);
 
@@ -84,7 +86,7 @@ function AddJobModal({
           job.title = jobTitle === "" ? curItem.title : jobTitle;
           job.jobType = jobname === "" ? curItem.jobType : jobname;
           job.description = description;
-          job.responsibilities = responsibilities;
+          job.featured = featured;
         }
         return job;
       });
@@ -108,6 +110,7 @@ function AddJobModal({
       jobType: jobname,
       description: description,
       responsibilities: responsibilities,
+      featured: featured
     };
 
     companyDetails.jobs =
@@ -115,14 +118,14 @@ function AddJobModal({
     companyDetails.jobs.push(newJob);
 
     // add axios call to update company details
-    const uodatedCompanyDetails = await axios({
+    const updatedCompanyDetails = await axios({
       method: "put",
       data: companyDetails,
       // withCredentials: true,
       url: `https://admin-panel-backend.vercel.app/update-company/?_id=${companyDetails._id}`,
     });
 
-    setJobs(uodatedCompanyDetails.data.jobs);
+    setJobs(updatedCompanyDetails.data.jobs);
     setShowAddJobModal(0);
 
     // if (isEdit) {
@@ -158,6 +161,22 @@ function AddJobModal({
       setShowAddJobModal(false);
     }
   };
+
+  const handleDeleteJobClick = async () => {
+    companyDetails.jobs.splice(index, 1);
+
+    console.log(companyDetails.jobs);
+
+    const updatedCompanyDetails = await axios({
+      method: "put",
+      data: companyDetails,
+      // withCredentials: true,
+      url: `https://admin-panel-backend.vercel.app/update-company/?_id=${companyDetails._id}`,
+    });
+
+    setJobs(updatedCompanyDetails.data.jobs);
+  }
+
   const message = () => {
     return (
       <div className="flex items-center justify-betwen">
@@ -207,7 +226,7 @@ function AddJobModal({
                   <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
                 </svg>
                 <h3 className="text-[0.875rem] leading-5 font-semibold m-0">
-                  Add Job
+                  {isEdit ? "Edit Job" : "Add Job"}
                 </h3>
               </div>
 
@@ -224,6 +243,20 @@ function AddJobModal({
                     className="appearance-none px-3 py-2 placeholder-[#6B7280] text-[#030303]  placeholder-opacity-90 relative w-full bg-white rounded text-sm border-[1.5px]  focus:outline-none focus:border-[#2dc5a1] focus:border-2 transition duration-200  ease-in mt-1 bg-transparent"
                   />
                 </div>
+
+                <div className="flex w-full h-1/4 mt-4">
+                  <input
+                    type="checkbox"
+                    name="isfeatured"
+                    id="isfeatured"
+                    checked={featured}
+                    onChange={(e) => setFeatured(e.target.checked)}
+                  />
+                  <label className="font-inter text-sm ml-2" htmlFor="">
+                    Featured
+                  </label>
+                </div>
+
                 <div className="w-full mt-[25px]">
                   <p className="text-[15px] font-semibold text-[#201e27]">
                     Type
@@ -238,9 +271,8 @@ function AddJobModal({
                   /> */}
 
                   <div
-                    className={`${
-                      autocomplete.disabled ? "hidden" : ""
-                    } ml-[0.5rem] w-[90%] absolute z-10 border rounded-md  py-1 bg-white
+                    className={`${autocomplete.disabled ? "hidden" : ""
+                      } ml-[0.5rem] w-[90%] absolute z-10 border rounded-md  py-1 bg-white
                         max-h-60 overflow-y-scroll`}
                   >
                     {autocomplete.data.map((item, index) => {
@@ -276,6 +308,8 @@ function AddJobModal({
                   </div>
                 </div>
 
+
+
                 {/* <div className='mt-[25px]'>
                   <p className="text-[15px] mb-[5px] font-semibold text-[#201e27]">Description</p>
                   <RichEditor
@@ -287,13 +321,13 @@ function AddJobModal({
                 </div> */}
                 <div className="mt-[25px]">
                   <p className="text-[15px] mb-[5px] font-semibold text-[#201e27]">
-                    Responsibilities
+                    Description
                   </p>
                   <RichEditor
-                    htmlContent={curItem.responsibilities}
-                    handleEditorChange={handleResponsibilityChange}
+                    htmlContent={curItem.description}
+                    handleEditorChange={handleDescriptionChange}
                     curItem={curItem}
-                    purpose="jobResponsibilities"
+                    purpose="jobDescription"
                   />
                 </div>
               </div>
@@ -311,7 +345,15 @@ function AddJobModal({
                 Save
               </button>
 
-              {isEdit && <button className="delete-button">Delete</button>}
+              {isEdit && <button
+                className="delete-button float-left m-[20px] py-[10px] "
+                onClick={() => {
+                  notify();
+                  setTimeout(() => {
+                    handleDeleteJobClick();
+                    setShowAddJobModal(false);
+                  }, 2000);
+                }} >Delete</button>}
             </div>
             <Toaster />
           </div>
