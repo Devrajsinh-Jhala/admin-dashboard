@@ -96,7 +96,7 @@ function AddJobModal({
         method: "put",
         data: companyDetails,
         // withCredentials: true,
-        url: `https://admin-panel-backend.vercel.app/update-company/?_id=${companyDetails._id}`,
+        url: `https://hirable-backend-original.vercel.app/update-company/?_id=${companyDetails._id}`,
       });
 
       // update jobs
@@ -122,7 +122,7 @@ function AddJobModal({
       method: "put",
       data: companyDetails,
       // withCredentials: true,
-      url: `https://admin-panel-backend.vercel.app/update-company/?_id=${companyDetails._id}`,
+      url: `https://hirable-backend-original.vercel.app/update-company/?_id=${companyDetails._id}`,
     });
 
     setJobs(updatedCompanyDetails.data.jobs);
@@ -165,13 +165,11 @@ function AddJobModal({
   const handleDeleteJobClick = async () => {
     companyDetails.jobs.splice(index, 1);
 
-    console.log(companyDetails.jobs);
-
     const updatedCompanyDetails = await axios({
       method: "put",
       data: companyDetails,
       // withCredentials: true,
-      url: `https://admin-panel-backend.vercel.app/update-company/?_id=${companyDetails._id}`,
+      url: `https://hirable-backend-original.vercel.app/update-company/?_id=${companyDetails._id}`,
     });
 
     setJobs(updatedCompanyDetails.data.jobs);
