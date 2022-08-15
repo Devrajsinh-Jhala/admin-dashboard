@@ -91,9 +91,9 @@ const RichEditor = ({
 
     if (newState) {
       setEditorState(newState);
-      return 'handled';
+      return "handled";
     }
-    return 'not-handled';
+    return "not-handled";
   };
 
   // const handlePastedText = (_text, html, editorState) => {};
@@ -113,8 +113,7 @@ const RichEditor = ({
     // }
   };
 
-  const handlePastedText = (_text, html, editorState) => {
-  };
+  const handlePastedText = (_text, html, editorState) => {};
 
   return (
     <div className="">
@@ -199,7 +198,7 @@ const RichEditor = ({
           className="focus:border-[#2dc5a1] focus:border-2 transition duration-200  ease-in"
         />
       </div>
-      <div className="mt-1 font-semibold">
+      {/* <div className="mt-1 font-semibold">
         {lenExceeded ? (
           <p className="text-sm" style={{ color: 'red' }}>
             Exceeded maximum limit {contentLength}/500
@@ -209,7 +208,7 @@ const RichEditor = ({
             {contentLength}/500
           </p>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

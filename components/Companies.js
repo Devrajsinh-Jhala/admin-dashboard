@@ -17,6 +17,8 @@ function Companies() {
     });
   }, []);
 
+  // console.log(companyDetails);
+
   return (
     <div className="main">
       <div className="min-h-screen pb-[20px] bg-[#f8f8f8]">

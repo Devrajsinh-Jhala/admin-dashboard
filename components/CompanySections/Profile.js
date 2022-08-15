@@ -130,8 +130,8 @@ function Profile({ id, companyDetails }) {
         </div>
       </div>
 
-      <div className="px-10 flex items-center justify-between w-full space-x-6">
-        <div className="w-full">
+      <div className=" flex items-center justify-between w-full ">
+        <div className="px-10 w-1/3">
           <p className="text-[12px] font-semibold text-[#201e27]">
             Number of Jobs and Assignments
           </p>
@@ -143,18 +143,32 @@ function Profile({ id, companyDetails }) {
             className="appearance-none px-3 py-2 placeholder-[#6B7280] text-[#030303]  placeholder-opacity-90 relative w-full bg-white rounded text-sm border-[1.5px]  focus:outline-none focus:border-[#2dc5a1] focus:border-2 transition duration-200  ease-in mt-1 bg-transparent"
           />
         </div>
-        {/* <div className="w-1/2">
-          <p className="text-[12px] font-semibold text-[#201e27]">
-            Number of openings
-          </p>
+        <div className="pr-10 w-1/3 space-y-2">
+          <p className="text-[12px] font-semibold text-[#201e27]">Funding</p>
+
           <input
             type="text"
-            value={openings}
-            onChange={(e) => setOpenings(e.target.value)}
-            placeholder="Number of Openings"
+            value={companyFunding}
+            onChange={(e) => setCompanyFunding(e.target.value)}
+            placeholder="Funding"
             className="appearance-none px-3 py-2 placeholder-[#6B7280] text-[#030303]  placeholder-opacity-90 relative w-full bg-white rounded text-sm border-[1.5px]  focus:outline-none focus:border-[#2dc5a1] focus:border-2 transition duration-200  ease-in mt-1 bg-transparent"
           />
-        </div> */}
+        </div>
+        <div className="pr-10 w-1/3 space-y-2">
+          <p className="text-[12px] font-semibold text-[#201e27]">Team Size</p>
+          <input
+            type="text"
+            value={teamSize}
+            onChange={(e) => setTeamSize(e.target.value)}
+            placeholder="Example: 10-20, 100+, >1000..."
+            className="appearance-none px-3 py-2 placeholder-[#6B7280] text-[#030303]  placeholder-opacity-90 relative w-full bg-white rounded text-sm border-[1.5px]  focus:outline-none focus:border-[#2dc5a1] focus:border-2 transition duration-200  ease-in mt-1 bg-transparent"
+          />
+          {/* <TeamSize
+  setTeamSize={setTeamSize}
+  id={id}
+  companyDetails={companyDetails}
+/> */}
+        </div>
       </div>
 
       <div className="px-10 w-full space-y-2">
@@ -185,33 +199,6 @@ function Profile({ id, companyDetails }) {
                     className="appearance-none px-3 py-2 placeholder-[#6B7280] text-[#030303]  placeholder-opacity-90 relative w-full bg-white rounded text-sm border-[1.5px]  focus:outline-none focus:border-[#2dc5a1] focus:border-2 transition duration-200  ease-in mt-1 bg-transparent"
                 /> */}
         <Tags setTags={setTags} id={id} companyDetails={companyDetails} />
-      </div>
-
-      <div className="px-10 w-full space-y-2">
-        <p className="text-[12px] font-semibold text-[#201e27]">Team Size</p>
-        <input
-          type="text"
-          value={teamSize}
-          onChange={(e) => setTeamSize(e.target.value)}
-          placeholder="Example: 10-20, 100+, >1000..."
-          className="appearance-none px-3 py-2 placeholder-[#6B7280] text-[#030303]  placeholder-opacity-90 relative w-full bg-white rounded text-sm border-[1.5px]  focus:outline-none focus:border-[#2dc5a1] focus:border-2 transition duration-200  ease-in mt-1 bg-transparent"
-        />
-        {/* <TeamSize
-          setTeamSize={setTeamSize}
-          id={id}
-          companyDetails={companyDetails}
-        /> */}
-      </div>
-      <div className="px-10 w-full space-y-2">
-        <p className="text-[12px] font-semibold text-[#201e27]">Funding</p>
-
-        <input
-          type="text"
-          value={companyFunding}
-          onChange={(e) => setCompanyFunding(e.target.value)}
-          placeholder="Funding"
-          className="appearance-none px-3 py-2 placeholder-[#6B7280] text-[#030303]  placeholder-opacity-90 relative w-full bg-white rounded text-sm border-[1.5px]  focus:outline-none focus:border-[#2dc5a1] focus:border-2 transition duration-200  ease-in mt-1 bg-transparent"
-        />
       </div>
 
       {/* <div className="px-10 w-full space-y-2">

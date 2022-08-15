@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import AddJobModal from "../Modals/AddJobModal";
 import AddKeyPeopleModal from "../Modals/AddKeyPeopleModal";
+import parse from "html-react-parser";
 
 function KeyPeople({ id, companyDetails }) {
   const [showAddJobModal, setShowAddJobModal] = useState(false);
@@ -30,7 +31,8 @@ function KeyPeople({ id, companyDetails }) {
   };
 
   const handleSaveJobClick = () => {
-    console.log(curItem);
+    console.warn(curItem);
+    // console.warn(jobs);
     setCurItem({
       title: "",
       jobType: "",
@@ -65,10 +67,21 @@ function KeyPeople({ id, companyDetails }) {
           return (
             <div
               key={index}
-              className="cursor-pointer m-[15px]"
+              className="cursor-pointer w-[250px] border-2 bg-white rounded-lg m-[15px]"
               onClick={() => handleJobClick(job, index)}
             >
-              <h1>{job.title}</h1>
+              <h1 className="mx-2 my-4 font-inter text-center text-lg">
+                {job.title}
+              </h1>
+              <p className="mx-2 my-4 font-inter text-base text-center">
+                {job.jobType}
+              </p>
+              <div
+                className="mx-2 my-4 font-inter text-center text-sm"
+                dangerouslySetInnerHTML={{ __html: job.description }}
+              />
+
+              {/* <p>{parse(job.description, { replace: true })}</p> */}
             </div>
           );
         })}

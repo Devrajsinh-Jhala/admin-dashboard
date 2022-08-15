@@ -39,7 +39,6 @@ function AddJobModal({
   // load company details
   useEffect(() => {
     if (companyDetails) {
-
     }
   }, [companyDetails]);
 
@@ -109,8 +108,8 @@ function AddJobModal({
       title: jobTitle,
       jobType: jobname,
       description: description,
-      responsibilities: responsibilities,
-      featured: featured
+      // responsibilities: responsibilities,
+      featured: featured,
     };
 
     companyDetails.jobs =
@@ -175,7 +174,7 @@ function AddJobModal({
     });
 
     setJobs(updatedCompanyDetails.data.jobs);
-  }
+  };
 
   const message = () => {
     return (
@@ -271,8 +270,9 @@ function AddJobModal({
                   /> */}
 
                   <div
-                    className={`${autocomplete.disabled ? "hidden" : ""
-                      } ml-[0.5rem] w-[90%] absolute z-10 border rounded-md  py-1 bg-white
+                    className={`${
+                      autocomplete.disabled ? "hidden" : ""
+                    } ml-[0.5rem] w-[90%] absolute z-10 border rounded-md  py-1 bg-white
                         max-h-60 overflow-y-scroll`}
                   >
                     {autocomplete.data.map((item, index) => {
@@ -307,8 +307,6 @@ function AddJobModal({
                     })}
                   </div>
                 </div>
-
-
 
                 {/* <div className='mt-[25px]'>
                   <p className="text-[15px] mb-[5px] font-semibold text-[#201e27]">Description</p>
@@ -345,15 +343,20 @@ function AddJobModal({
                 Save
               </button>
 
-              {isEdit && <button
-                className="delete-button float-left m-[20px] py-[10px] "
-                onClick={() => {
-                  notify();
-                  setTimeout(() => {
-                    handleDeleteJobClick();
-                    setShowAddJobModal(false);
-                  }, 2000);
-                }} >Delete</button>}
+              {isEdit && (
+                <button
+                  className="delete-button float-left m-[20px] py-[10px] "
+                  onClick={() => {
+                    notify();
+                    setTimeout(() => {
+                      handleDeleteJobClick();
+                      setShowAddJobModal(false);
+                    }, 2000);
+                  }}
+                >
+                  Delete
+                </button>
+              )}
             </div>
             <Toaster />
           </div>
